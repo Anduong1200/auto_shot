@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoScreenshot - Bộ Xử Lý Lưu Ảnh</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif; background: #0f0f1a; color: #e0e0e0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100vh; margin: 0; text-align: center;
+    }
+    .box {
+      background: rgba(255,255,255,0.05); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+      width: 450px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    h2 { color: #fff; margin-bottom: 10px; }
+    p { color: #a0a0b8; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+    .btn {
+      padding: 14px 24px; font-size: 15px; font-weight: 600; background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s;
+    }
+    .btn:hover { box-shadow: 0 4px 15px rgba(99,102,241,0.4); transform: translateY(-2px); }
+    .status { margin-top: 20px; font-weight: 500; color: #22c55e; display: none; }
+    .warn { color: #facc15; font-size: 13px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div style="font-size: 40px; margin-bottom: 15px;">📂</div>
+    <h2>Chọn thư mục lưu tuyệt đối</h2>
+    <p>Để lưu ảnh ra một thư mục bất kỳ (Absolute Path) mà không bị Chrome bắt tải về (Save As) liên tục, bạn hãy cấp quyền cho thẻ này. <br><br><b>Lưu ý: Không tắt thẻ này trong lúc extension đang chụp ảnh!</b></p>
+    <button class="btn" id="pickBtn">📁 Chọn thư mục trên máy</button>
+    <div class="status" id="statusMsg">✅ Đã kết nối với thư mục. Bạn có thể quay lại trang web và mở Popup để bắt đầu chụp!</div>
+    <div class="warn">Extension sẽ tự động gửi ảnh qua thẻ này để lưu thẳng vào ổ cứng.</div>
+  </div>
+  <script src="saver.js"></script>
+</body>
+</html>

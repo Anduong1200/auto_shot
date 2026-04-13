@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 400px;
+      font-family: 'Inter', sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .header h2 { font-size: 16px; font-weight: 700; color: #fff; }
+    .header .subtitle { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 4px; }
+    .header .icon { font-size: 28px; margin-bottom: 8px; display: block; }
+
+    /* ===== Content ===== */
+    .content { padding: 20px; }
+
+    /* ===== Form Groups ===== */
+    .form-group { margin-bottom: 12px; }
+    .form-group label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; color: #a0a0b8;
+      margin-bottom: 6px; text-transform: uppercase;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 12px 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px; color: #e0e0e0;
+      font-size: 13px; outline: none; transition: all .3s;
+    }
+    .form-group input:focus {
+      border-color: #6366f1; background: rgba(99,102,241,.08);
+      box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+    }
+    
+    .flex-row { display: flex; gap: 10px; }
+    .flex-row .form-group { flex: 1; }
+
+    /* ===== Buttons ===== */
+    .btn-group { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+    .btn {
+      width: 100%; padding: 14px; font-size: 14px; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer; transition: all .3s;
+      text-transform: uppercase;
+    }
+    #startBtn {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+    }
+    #startBtn:hover { box-shadow: 0 4px 15px rgba(99,102,241,.4); transform: translateY(-1px); }
+    #stopBtn {
+      background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; display: none;
+    }
+    #stopBtn:hover { box-shadow: 0 4px 15px rgba(239,68,68,.4); transform: translateY(-1px); }
+
+    /* ===== Status ===== */
+    .status-bar {
+      margin-top: 16px; padding: 12px 14px;
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px; display: none;
+    }
+    .status-bar.active { display: block; }
+    .status-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
+    .status-row:last-child { margin-bottom: 0; }
+    .status-value.running { color: #22c55e; }
+    .status-value.stopped { color: #ef4444; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="icon">📸</span>
+    <h2>Auto Screenshot</h2>
+    <div class="subtitle">Chụp ảnh liên tục - Version 7 (Auto Continue)</div>
+  </div>
+
+  <div class="content">
+    
+    <!-- Subfolder -->
+    <div class="form-group">
+      <label>📂 Thư Mục Lưu (bên trong Downloads)</label>
+      <input type="text" id="subfolder" value="AutoScreenshot" placeholder="VD: Sach_1">
+    </div>
+
+    <!-- Tiền tố -->
+    <div class="form-group">
+      <label>✏️ Tiền Tố File</label>
+      <input type="text" id="prefix" value="Trang" placeholder="VD: Trang">
+    </div>
+
+    <!-- Số liệu (Index + Limit) -->
+    <div class="flex-row">
+      <div class="form-group">
+        <label>▶️ Bắt đầu từ số</label>
+        <input type="number" id="startIndex" value="1" min="1" placeholder="Mặc định: 1">
+      </div>
+      <div class="form-group">
+        <label>🛑 Dừng ở số (Mục tiêu)</label>
+        <input type="number" id="limit" value="0" min="0" placeholder="0 = Vô hạn">
+      </div>
+    </div>
+
+    <!-- Delay -->
+    <div class="form-group">
+      <label>⏱️ Thời gian chờ (giây)</label>
+      <div style="display: flex; gap: 10px;">
+        <input type="range" id="delay" min="0.5" max="10" step="0.5" value="1.5" style="flex: 1;">
+        <span id="delayValue" style="color: #6366f1; font-weight: 600; width: 40px;">1.5s</span>
+      </div>
+    </div>
+
+    <!-- Selector -->
+    <div class="form-group" style="display:none;">
+      <label>🎯 CSS Selector Nút Next</label>
+      <input type="text" id="selector" value="button.f-button.is-next">
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" id="startBtn">▶ Bắt Đầu Chụp</button>
+      <button class="btn" id="stopBtn">⏹ Dừng Lại</button>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+      <div class="status-row">
+        <span>Trạng thái:</span>
+        <span class="status-value running" id="statusText">Đang chạy...</span>
+      </div>
+      <div class="status-row">
+        <span>Đã lưu thành công:</span>
+        <span class="status-value" id="countText" style="color: #6366f1; font-weight: 700;">0</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

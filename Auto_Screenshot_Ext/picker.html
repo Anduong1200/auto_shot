@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chọn Thư Mục Lưu - Auto Screenshot</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .icon { font-size: 48px; margin-bottom: 16px; display: block; }
+    h2 { margin: 0 0 10px 0; color: #fff; }
+    p { font-size: 14px; color: #a0a0b8; line-height: 1.5; margin-bottom: 24px; }
+    
+    .btn {
+      padding: 14px 24px; font-size: 15px; font-weight: 600;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none; border-radius: 12px;
+      cursor: pointer; transition: all .3s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn:hover { box-shadow: 0 6px 20px rgba(99,102,241,.4); transform: translateY(-2px); }
+    
+    .success { display: none; color: #22c55e; margin-top: 20px; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="icon">📂</span>
+    <h2>Chọn thư mục lưu ảnh</h2>
+    <p>Extension cần bạn cấp quyền truy cập vào một thư mục cố định để có thể lưu ảnh liên tục mà không hiện hộp thoại "Save As".</p>
+    
+    <button class="btn" id="pickBtn">
+      <span style="font-size: 18px;">📁</span> Bấm vào đây để Chọn
+    </button>
+    
+    <div class="success" id="successMsg">✅ Đã cấp quyền thành công! Trang này sẽ tự đóng...</div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="picker.js"></script>
+</body>
+</html>
